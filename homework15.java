@@ -5,103 +5,94 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JApplet;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+public class homework15 extends JApplet{
+	 static	int count;
+	 static String answer = createAnswer(4);
+private	 JPanel jpan , jpan2;
+private	 JButton bton ;
+private	 JTextField TF ;
+private	 JTextArea TA ;
+private	 JLabel LB ;
 
-
-public class homework15 extends JFrame implements ActionListener{
-	
-	private JButton guess;
-	private JTextArea edit;
-	private	JTextField answer = new JTextField();
-	
-		public homework15(){
-		super("guess_number");
+	public void init()
+	{
+		//å»ºç«‹å…ƒä»¶
+		LB = new JLabel("è«‹è¼¸å…¥æ•¸å­—");
+		bton = new JButton("çŒœ");
+		TF   = new JTextField(20);//è¼¸å…¥æ•¸å­— æœ€å¤š20å€‹
+		TA   = new JTextArea(20,100);
+		jpan = new JPanel();
+		jpan2 = new JPanel();
+		//å»ºç«‹å®¹å™¨
+		jpan.add(LB);
+		jpan.add(TF);
+		jpan.add(bton);
+		jpan2.add(TA);
+		add(jpan,BorderLayout.NORTH);
+		add(jpan,BorderLayout.CENTER);
+		//è¨­ç½®è¦–çª—
+		setSize(200,400); //è¨­ç½®è¦–çª—å¤§å°
+		setVisible(true);	//æ˜¯å¦èƒ½ä¸èƒ½é¡¯ç¤ºè¦–çª—
+//		setDefaultCloseOperation(EXIT_ON_CLOSE);//æŒ‰ä¸‹æ‰“X èƒ½çµæŸåŸ·è¡Œ
+		//å°‡å…ƒä»¶æ”¾æ–¼å®¹å™¨ä¸­
+		setLayout(new BorderLayout());   //è¦–çª—è¨­è¨ˆå¸«
+//		JPanel jpan = new JPanel(new FlowLayout(FlowLayout.LEFT)); //æ°´æµå¼ç‰ˆé¢
+//		add(bton,BorderLayout.NORTH);
+		
+		//ç™»é™¸å‚¾è½è€…
+		bton.addActionListener(new ActionListener1());
 		
 		
-		JButton guess = new JButton("²q");
- 		edit = new JTextArea();					//³]¸m
- 		answer.setColumns(4); 		
- 		setLayout(new BorderLayout());         //µøµ¡³]­p®v
- 		JPanel top = new JPanel(new FlowLayout(FlowLayout.RIGHT)); 
- 		JPanel top1 = new JPanel(new FlowLayout(FlowLayout.LEFT)); 
- 		               //   		   
- 		top.add(guess);						//²q «ö¶s¦b¥k¤W¨¤
- 		top1.add(answer);					//Åã¥Ü®Ø
-		add(answer,BorderLayout.NORTH);       //Åã¥Ü®Ø
- 		add(top,BorderLayout.EAST);        //²q
-  		add(edit,BorderLayout.CENTER);       //¿é¤J®Ø
-		//¥Ø¼Ğµøµ¡
-	
-		setSize(640,480);	      //µøµ¡¤j¤p
-		setVisible(true);		  //¬O§_¯à¤£¯àÅã¥Üµøµ¡
-		setDefaultCloseOperation(EXIT_ON_CLOSE); //«öµ²§ôª½±µµ²§ôµøµ¡
-
-
-//°õ¦æ°Ï
-		guess.addActionListener(this);
-		guess.addActionListener(new MyListener());
-		guess.addActionListener(new homework.MyListener());
-		guess.addActionListener(new ActionListener() {
-		
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				doOpen();
-				
-			}
-		});
 	}
 
-		private void doOpen() {
-			boolean isWINNER = false;
-			for (int i=0; i<10; i++){
-				// ¶}©l²q
-				String guess = JOptionPane.showInputDialog("²q§a!");
-				
-				// ¤ñ¹ï
-				if (guess.equals(answer)){
-					// ¹ï¤F => ®¥³ß¦Ñ·İ,...
-					isWINNER = true;
-					JOptionPane.showMessageDialog(null, "®¥³ß¦Ñ·İ,...");
-					break;
-				}else{
-					// ¿ù¤F => ´£¥Ü 1A2b
-					String result = checkAB(answer, guess);
-					JOptionPane.showMessageDialog(null, guess + ":" + result);
-				}
-			}
-			if (!isWINNER){
-				JOptionPane.showMessageDialog(null, "ÜÍ, ¾|³D, \nµª®×¬O:" + 
-							answer);
-			}
-				
-			
-			
-		}
-		private String checkAB(JTextField answer2, String guess2) {
-			// TODO Auto-generated method stub
-			return null;
-		}
+class ActionListener1 implements ActionListener{
 
-		static String checkAB(String a, String g){
-			int A, B; A = B = 0;
-			for (int i=0; i<g.length();i++){
-				if (g.charAt(i) == a.charAt(i)){
-					A++;
-				}else if (a.indexOf(g.charAt(i)) != -1){
-					B++;
-				}
-			}
-			return A + "A" + B + "B";
+	@Override
+	public void actionPerformed(ActionEvent ae) {
+		run();
+		 //count++;
+		 System.out.println(count);
+		 if(count>10){
+			 JOptionPane.showMessageDialog(null, "å—, é­¯è›‡, \nç­”æ¡ˆæ˜¯:" + answer);
 		}
-		
-		static String createAnswer(int n){
-			// ¬~µP
+	}
+}
+	 void run() {
+		String player = TF.getText();
+		TF.setText("");
+		String result = checkAB(answer, player);
+		if(player.equals(answer)){
+	          TA.append(player+"=>"+result+"\n");
+	          JOptionPane.showMessageDialog(null, "æ­å–œè€çˆº,è³€å–œå¤«äºº...");
+		 }
+		 else{
+			 TA.append(player+"=>"+result+"\n");
+		 }
+	 count++;
+	 }	 
+	static String checkAB(String answer,String player){
+		 int A=0,B=0;
+		 for(int i=0;i<player.length();i++){
+			 if(player.charAt(i)==answer.charAt(i)){
+				A++; 
+			 }
+			 else if(answer.indexOf(player.charAt(i))!=-1){
+				 B++;
+			 }
+		 }
+		 return A+"A"+B+"B";
+	 }
+	 
+	 static String createAnswer(int n){
+			// æ´—ç‰Œ
 			int[] poker = new int[n];	// 0,0,...0
 			int rand;
 			boolean isOK;
@@ -109,7 +100,7 @@ public class homework15 extends JFrame implements ActionListener{
 				
 				do {
 					rand = (int)(Math.random()*10);
-					// ÀË¬d¾÷¨î
+					// æª¢æŸ¥æ©Ÿåˆ¶
 					isOK = true;
 					for (int j=0;j<i;j++){
 						if (poker[j]==rand){
@@ -123,27 +114,10 @@ public class homework15 extends JFrame implements ActionListener{
 				poker[i] = rand;
 				//System.out.println(poker[i]);
 			}
-			String ret = "";
-			for (int v : poker) ret += v;
-			
-			return ret;
-			
-			
-		}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-			
-	}
-	public static void main(String[] args) {
-		new homework15();
-	}
-}
-
-class MyListener implements ActionListener{
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
+			StringBuffer ret =new StringBuffer("");
+			for (int v : poker) ret.append(v);
+			  String rets=ret.toString();
+			return rets;	
 	}
 
 }
-
